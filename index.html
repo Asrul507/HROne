@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>HROne — Smart HR Management System</title>
+  <meta
+    name="description"
+    content="HROne adalah sistem absensi dan manajemen SDM berbasis web untuk perusahaan modern."
+  />
+
+  <!-- Font Awesome Icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  />
+
+  <style>
+    :root {
+      --navy: #0f172a;
+      --blue: #1e3a8a;
+      --blue-2: #2563eb;
+      --blue-soft: #eff6ff;
+      --emerald: #10b981;
+      --emerald-dark: #059669;
+      --slate: #475569;
+      --slate-light: #64748b;
+      --light: #f8fafc;
+      --white: #ffffff;
+      --border: #e2e8f0;
+      --shadow: 0 20px 45px rgba(15, 23, 42, 0.12);
+      --radius: 22px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--light);
+      color: var(--navy);
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .container {
+      width: min(1120px, 92%);
+      margin: auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .navbar {
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 24px;
+      color: var(--blue);
+    }
+
+    .brand-logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--blue), var(--emerald));
+      display: grid;
+      place-items: center;
+      color: white;
+      font-weight: 900;
+      box-shadow: var(--shadow);
+      letter-spacing: -1px;
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      color: var(--slate);
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .nav-menu a:hover {
+      color: var(--blue);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 13px 20px;
+      border-radius: 999px;
+      border: none;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.25s ease;
+      font-size: 14px;
+    }
+
+    .btn-primary {
+      background: var(--emerald);
+      color: white;
+      box-shadow: 0 12px 28px rgba(16, 185, 129, 0.28);
+    }
+
+    .btn-primary:hover {
+      background: var(--emerald-dark);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: white;
+      color: var(--blue);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      position: relative;
+      padding: 86px 0 70px;
+      background:
+        radial-gradient(circle at top left, rgba(16, 185, 129, 0.16), transparent 32%),
+        radial-gradient(circle at top right, rgba(30, 58, 138, 0.16), transparent 36%);
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 52px;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: white;
+      color: var(--blue);
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 22px;
+    }
+
+    .badge span {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--emerald);
+    }
+
+    .hero h1 {
+      font-size: clamp(38px, 6vw, 64px);
+      line-height: 1.08;
+      letter-spacing: -1.8px;
+      margin-bottom: 22px;
+      color: var(--navy);
+    }
+
+    .hero h1 strong {
+      color: var(--blue);
+    }
+
+    .hero p {
+      color: var(--slate);
+      font-size: 18px;
+      max-width: 620px;
+      margin-bottom: 30px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 34px;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      max-width: 620px;
+    }
+
+    .stat-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+    }
+
+    .stat-card h3 {
+      color: var(--blue);
+      font-size: 26px;
+      line-height: 1.2;
+    }
+
+    .stat-card p {
+      margin: 0;
+      font-size: 13px;
+      color: var(--slate);
+    }
+
+    .dashboard-preview {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .dashboard-top {
+      height: 52px;
+      background: linear-gradient(135deg, var(--blue), var(--blue-2));
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      padding: 0 18px;
+      color: white;
+      font-weight: 800;
+      justify-content: space-between;
+    }
+
+    .dashboard-top i {
+      font-size: 8px;
+      opacity: 0.75;
+    }
+
+    .dashboard-content {
+      padding: 22px 4px 4px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .dash-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .mini-card {
+      background: var(--blue-soft);
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    .mini-card small {
+      color: var(--slate);
+      font-weight: 700;
+    }
+
+    .mini-card h4 {
+      margin-top: 8px;
+      font-size: 24px;
+      color: var(--blue);
+    }
+
+    .chart-box {
+      height: 170px;
+      background:
+        linear-gradient(180deg, rgba(16, 185, 129, 0.22), rgba(16, 185, 129, 0.03)),
+        white;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      display: flex;
+      align-items: end;
+      gap: 10px;
+      padding: 20px;
+    }
+
+    .bar {
+      flex: 1;
+      border-radius: 10px 10px 0 0;
+      background: linear-gradient(180deg, var(--emerald), var(--blue));
+      min-height: 34px;
+    }
+
+    section {
+      padding: 78px 0;
+    }
+
+    .section-title {
+      text-align: center;
+      max-width: 760px;
+      margin: 0 auto 46px;
+    }
+
+    .section-title span {
+      color: var(--emerald);
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: 13px;
+      letter-spacing: 1px;
+    }
+
+    .section-title h2 {
+      font-size: clamp(30px, 4vw, 44px);
+      line-height: 1.15;
+      margin: 10px 0 14px;
+      letter-spacing: -1px;
+    }
+
+    .section-title p {
+      color: var(--slate);
+      font-size: 17px;
+    }
+
+    .problem {
+      background: white;
+    }
+
+    .problem-grid,
+    .features-grid,
+    .industry-grid,
+    .investment-grid {
+      display: grid;
+      gap: 22px;
+    }
+
+    .problem-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .features-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .problem-card,
+    .feature-card,
+    .industry-card,
+    .investment-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 26px;
+      box-shadow: 0 10px 26px rgba(15, 23, 42, 0.05);
+    }
+
+    .problem-card {
+      background: var(--light);
+    }
+
+    .feature-card:hover,
+    .investment-card:hover {
+      transform: translateY(-4px);
+      transition: 0.25s ease;
+      box-shadow: var(--shadow);
+    }
+
+    .icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: var(--blue-soft);
+      color: var(--blue);
+      font-size: 22px;
+      margin-bottom: 18px;
+    }
+
+    .problem-card h3,
+    .feature-card h3 {
+      font-size: 19px;
+      margin-bottom: 10px;
+    }
+
+    .problem-card p,
+    .feature-card p,
+    .investment-card p {
+      color: var(--slate);
+      font-size: 15px;
+    }
+
+    .benefits {
+      background: var(--navy);
+      color: white;
+    }
+
+    .benefits .section-title p,
+    .benefits .section-title h2 {
+      color: white;
+    }
+
+    .benefit-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .benefit-item {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 18px;
+      padding: 20px;
+      font-weight: 700;
+    }
+
+    .benefit-item i {
+      color: var(--emerald);
+      margin-right: 8px;
+    }
+
+    .industry-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .industry-card {
+      text-align: center;
+      font-weight: 800;
+      color: var(--blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 88px;
+    }
+
+    .industry-card i {
+      color: var(--emerald);
+      font-size: 20px;
+    }
+
+    .investment {
+      background: white;
+    }
+
+    .investment-grid {
+      grid-template-columns: minmax(280px, 800px);
+      justify-content: center;
+    }
+
+    .investment-card {
+      position: relative;
+      border: 2px solid var(--emerald);
+      overflow: hidden;
+    }
+
+    .investment-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 7px;
+      background: linear-gradient(90deg, var(--blue), var(--emerald));
+    }
+
+    .investment-card h3 {
+      font-size: 28px;
+      margin-bottom: 12px;
+      color: var(--blue);
+    }
+
+    .investment-card .lead {
+      font-size: 16px;
+      margin-bottom: 22px;
+    }
+
+    .investment-card ul {
+      list-style: none;
+      display: grid;
+      gap: 12px;
+      margin: 24px 0;
+      color: var(--slate);
+    }
+
+    .investment-card li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .investment-card li i {
+      color: var(--emerald);
+      margin-top: 4px;
+    }
+
+    .maintenance-box {
+      background: var(--blue-soft);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 20px;
+      margin: 24px 0 28px;
+    }
+
+    .maintenance-box h4 {
+      color: var(--blue);
+      font-size: 20px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .maintenance-box h4 i {
+      color: var(--emerald);
+    }
+
+    .maintenance-box p {
+      margin: 0;
+      color: var(--slate);
+    }
+
+    .note-box {
+      background: #f8fafc;
+      border: 1px dashed #cbd5e1;
+      border-radius: 18px;
+      padding: 18px;
+      margin-top: 18px;
+      color: var(--slate);
+      font-size: 15px;
+    }
+
+    .note-box strong {
+      color: var(--blue);
+    }
+
+    .cta {
+      background:
+        linear-gradient(135deg, rgba(30, 58, 138, 0.95), rgba(15, 23, 42, 0.96)),
+        url("https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=1600&auto=format&fit=crop");
+      background-size: cover;
+      background-position: center;
+      color: white;
+      text-align: center;
+    }
+
+    .cta h2 {
+      font-size: clamp(32px, 5vw, 50px);
+      line-height: 1.14;
+      margin-bottom: 18px;
+    }
+
+    .cta p {
+      max-width: 720px;
+      margin: 0 auto 28px;
+      color: #e2e8f0;
+      font-size: 17px;
+    }
+
+    .contact {
+      background: var(--light);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 30px;
+      align-items: start;
+    }
+
+    .contact-info,
+    .contact-form {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 30px;
+      box-shadow: 0 10px 26px rgba(15, 23, 42, 0.05);
+    }
+
+    .contact-info h3,
+    .contact-form h3 {
+      font-size: 26px;
+      margin-bottom: 14px;
+    }
+
+    .contact-info p {
+      color: var(--slate);
+      margin-bottom: 18px;
+    }
+
+    .contact-list {
+      display: grid;
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .contact-list div {
+      background: var(--blue-soft);
+      padding: 14px 16px;
+      border-radius: 14px;
+      color: var(--blue);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .contact-list i {
+      color: var(--emerald);
+      width: 18px;
+    }
+
+    form {
+      display: grid;
+      gap: 14px;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 16px;
+      font-size: 15px;
+      font-family: inherit;
+      outline: none;
+      background: white;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border-color: var(--emerald);
+      box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.12);
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .form-helper {
+      color: var(--slate-light);
+      font-size: 13px;
+      margin-top: -4px;
+    }
+
+    footer {
+      background: var(--navy);
+      color: #cbd5e1;
+      padding: 32px 0;
+      text-align: center;
+    }
+
+    footer strong {
+      color: white;
+    }
+
+    .whatsapp-float {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      z-index: 200;
+      background: #25d366;
+      color: white;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 28px;
+      box-shadow: 0 14px 30px rgba(37, 211, 102, 0.35);
+    }
+
+    @media (max-width: 920px) {
+      .nav-menu {
+        display: none;
+      }
+
+      .hero-grid,
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .problem-grid,
+      .features-grid,
+      .benefit-list,
+      .industry-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 620px) {
+      .hero {
+        padding-top: 58px;
+      }
+
+      .hero-stats,
+      .problem-grid,
+      .features-grid,
+      .benefit-list,
+      .industry-grid,
+      .dash-row {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      section {
+        padding: 58px 0;
+      }
+
+      .contact-info,
+      .contact-form,
+      .investment-card {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="container navbar">
+      <a href="#" class="brand">
+        <div class="brand-logo">HR</div>
+        <span>HROne</span>
+      </a>
+
+      <nav class="nav-menu">
+        <a href="#fitur">Fitur</a>
+        <a href="#keunggulan">Keunggulan</a>
+        <a href="#investasi">Investasi</a>
+        <a href="#kontak">Konsultasi</a>
+        <a href="https://hrone.gpro.my.id" class="btn btn-secondary">
+          <i class="fa-solid fa-right-to-bracket"></i>
+          Login Sistem
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="badge">
+            <span></span>
+            Smart HR Management System
+          </div>
+
+          <h1>
+            Kelola Absensi & SDM dalam
+            <strong>Satu Sistem Modern</strong>
+          </h1>
+
+          <p>
+            HROne membantu perusahaan mengelola absensi online, jadwal kerja,
+            cuti, izin, sakit, data karyawan, approval, dan laporan secara
+            real-time melalui platform berbasis web.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#kontak">
+              <i class="fa-solid fa-calendar-check"></i>
+              Request Konsultasi
+            </a>
+
+            <a
+              class="btn btn-secondary"
+              href="mailto:support@gpro.my.id?subject=Konsultasi%20HROne&body=Halo%20GPRO%20Technology%2C%20saya%20tertarik%20untuk%20konsultasi%20HROne."
+            >
+              <i class="fa-solid fa-envelope"></i>
+              Email Kami
+            </a>
+          </div>
+
+          <div class="hero-stats">
+            <div class="stat-card">
+              <h3>70%</h3>
+              <p>Lebih hemat waktu administrasi</p>
+            </div>
+
+            <div class="stat-card">
+              <h3>24/7</h3>
+              <p>Akses dari HP dan komputer</p>
+            </div>
+
+            <div class="stat-card">
+              <h3>1</h3>
+              <p>Sistem untuk semua kebutuhan HR</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-preview">
+          <div class="dashboard-top">
+            <span>Dashboard HROne</span>
+            <span>
+              <i class="fa-solid fa-circle"></i>
+              <i class="fa-solid fa-circle"></i>
+              <i class="fa-solid fa-circle"></i>
+            </span>
+          </div>
+
+          <div class="dashboard-content">
+            <div class="dash-row">
+              <div class="mini-card">
+                <small>Total Karyawan</small>
+                <h4>128</h4>
+              </div>
+
+              <div class="mini-card">
+                <small>Hadir Hari Ini</small>
+                <h4>116</h4>
+              </div>
+            </div>
+
+            <div class="dash-row">
+              <div class="mini-card">
+                <small>Terlambat</small>
+                <h4>7</h4>
+              </div>
+
+              <div class="mini-card">
+                <small>Cuti/Izin</small>
+                <h4>5</h4>
+              </div>
+            </div>
+
+            <div class="chart-box">
+              <div class="bar" style="height: 55%;"></div>
+              <div class="bar" style="height: 78%;"></div>
+              <div class="bar" style="height: 42%;"></div>
+              <div class="bar" style="height: 88%;"></div>
+              <div class="bar" style="height: 64%;"></div>
+              <div class="bar" style="height: 96%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROBLEM -->
+    <section class="problem">
+      <div class="container">
+        <div class="section-title">
+          <span>Permasalahan</span>
+          <h2>Masih Mengelola HR Secara Manual?</h2>
+          <p>
+            Proses manual membuat data lambat, rawan salah, dan sulit dipantau
+            oleh manajemen.
+          </p>
+        </div>
+
+        <div class="problem-grid">
+          <div class="problem-card">
+            <div class="icon">
+              <i class="fa-solid fa-clock"></i>
+            </div>
+            <h3>Absensi Manual</h3>
+            <p>
+              Rekap kehadiran membutuhkan waktu lama dan rawan manipulasi.
+            </p>
+          </div>
+
+          <div class="problem-card">
+            <div class="icon">
+              <i class="fa-solid fa-file-lines"></i>
+            </div>
+            <h3>Form Cuti Kertas</h3>
+            <p>
+              Pengajuan cuti, izin, dan sakit sering tercecer atau lambat diproses.
+            </p>
+          </div>
+
+          <div class="problem-card">
+            <div class="icon">
+              <i class="fa-solid fa-chart-column"></i>
+            </div>
+            <h3>Excel Berulang</h3>
+            <p>
+              Admin harus membuat laporan manual dari banyak file berbeda.
+            </p>
+          </div>
+
+          <div class="problem-card">
+            <div class="icon">
+              <i class="fa-solid fa-users"></i>
+            </div>
+            <h3>Data Tersebar</h3>
+            <p>
+              Profil karyawan, jadwal, dan riwayat tidak tersimpan dalam satu tempat.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section id="fitur">
+      <div class="container">
+        <div class="section-title">
+          <span>Fitur Utama</span>
+          <h2>Semua Kebutuhan HR dalam Satu Platform</h2>
+          <p>
+            Dirancang untuk membantu perusahaan bekerja lebih cepat, rapi,
+            dan profesional.
+          </p>
+        </div>
+
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="icon">
+              <i class="fa-solid fa-location-dot"></i>
+            </div>
+            <h3>Absensi Online GPS</h3>
+            <p>
+              Check in dan check out dengan foto serta lokasi GPS secara real-time.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="icon">
+              <i class="fa-solid fa-calendar-days"></i>
+            </div>
+            <h3>Jadwal Shift</h3>
+            <p>
+              Kelola shift pagi, siang, malam, rotasi, libur, dan jadwal khusus.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="icon">
+              <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <h3>Approval Pengajuan</h3>
+            <p>
+              Proses cuti, izin, sakit, dan perbaikan absen dengan persetujuan digital.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="icon">
+              <i class="fa-solid fa-id-card"></i>
+            </div>
+            <h3>Data Karyawan</h3>
+            <p>
+              Simpan profil, jabatan, masa kerja, status, dan riwayat karyawan.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="icon">
+              <i class="fa-solid fa-chart-line"></i>
+            </div>
+            <h3>Dashboard Monitoring</h3>
+            <p>
+              Pantau kehadiran, keterlambatan, cuti, dan aktivitas secara langsung.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="icon">
+              <i class="fa-solid fa-file-invoice"></i>
+            </div>
+            <h3>Laporan HR</h3>
+            <p>
+              Rekap kehadiran dan pengajuan lebih cepat, rapi, dan mudah dianalisis.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BENEFITS -->
+    <section id="keunggulan" class="benefits">
+      <div class="container">
+        <div class="section-title">
+          <span>Keunggulan</span>
+          <h2>Mengapa Perusahaan Memilih HROne?</h2>
+          <p>
+            Sistem fleksibel, modern, dan dapat disesuaikan dengan kebutuhan operasional.
+          </p>
+        </div>
+
+        <div class="benefit-list">
+          <div class="benefit-item">
+            <i class="fa-solid fa-check"></i>
+            Berbasis web dan cloud
+          </div>
+
+          <div class="benefit-item">
+            <i class="fa-solid fa-check"></i>
+            Akses dari HP dan komputer
+          </div>
+
+          <div class="benefit-item">
+            <i class="fa-solid fa-check"></i>
+            Tidak perlu instalasi aplikasi
+          </div>
+
+          <div class="benefit-item">
+            <i class="fa-solid fa-check"></i>
+            Multi role: Admin, Supervisor, Staff
+          </div>
+
+          <div class="benefit-item">
+            <i class="fa-solid fa-check"></i>
+            Tampilan modern dan responsif
+          </div>
+
+          <div class="benefit-item">
+            <i class="fa-solid fa-check"></i>
+            Bisa dikembangkan sesuai kebutuhan
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INDUSTRY -->
+    <section>
+      <div class="container">
+        <div class="section-title">
+          <span>Industri</span>
+          <h2>Cocok untuk Berbagai Jenis Perusahaan</h2>
+          <p>
+            HROne dapat digunakan oleh bisnis operasional, jasa, retail,
+            hingga perusahaan menengah.
+          </p>
+        </div>
+
+        <div class="industry-grid">
+          <div class="industry-card">
+            <i class="fa-solid fa-hotel"></i>
+            Hotel
+          </div>
+
+          <div class="industry-card">
+            <i class="fa-solid fa-building"></i>
+            Mall
+          </div>
+
+          <div class="industry-card">
+            <i class="fa-solid fa-broom"></i>
+            Cleaning Service
+          </div>
+
+          <div class="industry-card">
+            <i class="fa-solid fa-briefcase"></i>
+            Perkantoran
+          </div>
+
+          <div class="industry-card">
+            <i class="fa-solid fa-cart-shopping"></i>
+            Retail
+          </div>
+
+          <div class="industry-card">
+            <i class="fa-solid fa-helmet-safety"></i>
+            Kontraktor
+          </div>
+
+          <div class="industry-card">
+            <i class="fa-solid fa-industry"></i>
+            Manufaktur
+          </div>
+
+          <div class="industry-card">
+            <i class="fa-solid fa-truck-fast"></i>
+            Logistik
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INVESTMENT -->
+    <section id="investasi" class="investment">
+      <div class="container">
+        <div class="section-title">
+          <span>Investasi Sistem</span>
+          <h2>Biaya Fleksibel Sesuai Kebutuhan Perusahaan</h2>
+          <p>
+            HROne menggunakan skema sederhana: biaya implementasi awal dan
+            maintenance bulanan agar sistem tetap berjalan optimal.
+          </p>
+        </div>
+
+        <div class="investment-grid">
+          <div class="investment-card">
+            <div class="icon">
+              <i class="fa-solid fa-handshake"></i>
+            </div>
+
+            <h3>Implementasi HROne</h3>
+
+            <p class="lead">
+              Cocok untuk perusahaan yang ingin mulai menggunakan sistem HR digital
+              dengan proses setup, penyesuaian fitur, dan pendampingan awal.
+            </p>
+
+            <ul>
+              <li>
+                <i class="fa-solid fa-check"></i>
+                <span>Setup sistem awal berbasis web</span>
+              </li>
+
+              <li>
+                <i class="fa-solid fa-check"></i>
+                <span>Konfigurasi data perusahaan dan struktur organisasi</span>
+              </li>
+
+              <li>
+                <i class="fa-solid fa-check"></i>
+                <span>Input dan migrasi data karyawan</span>
+              </li>
+
+              <li>
+                <i class="fa-solid fa-check"></i>
+                <span>Pengaturan role pengguna: Admin, Supervisor, dan Staff</span>
+              </li>
+
+              <li>
+                <i class="fa-solid fa-check"></i>
+                <span>Pengaturan shift dan jadwal kerja</span>
+              </li>
+
+              <li>
+                <i class="fa-solid fa-check"></i>
+                <span>Absensi online dengan foto dan GPS</span>
+              </li>
+
+              <li>
+                <i class="fa-solid fa-check"></i>
+                <span>Pengajuan cuti, izin, sakit, dan perbaikan absen</span>
+              </li>
+
+              <li>
+                <i class="fa-solid fa-check"></i>
+                <span>Dashboard monitoring HR dan laporan kehadiran</span>
+              </li>
+
+              <li>
+                <i class="fa-solid fa-check"></i>
+                <span>Training penggunaan sistem untuk admin dan pengguna</span>
+              </li>
+            </ul>
+
+            <div class="maintenance-box">
+              <h4>
+                <i class="fa-solid fa-screwdriver-wrench"></i>
+                Maintenance Bulanan
+              </h4>
+
+              <p>
+                Tersedia layanan maintenance bulanan untuk dukungan teknis,
+                pengecekan sistem, backup, perbaikan bug ringan, update minor,
+                dan penyesuaian kecil sesuai kebutuhan operasional.
+              </p>
+            </div>
+
+            <div class="note-box">
+              <strong>Catatan:</strong>
+              Biaya implementasi dan maintenance disesuaikan berdasarkan jumlah
+              karyawan, fitur yang digunakan, dan kebutuhan operasional perusahaan.
+            </div>
+
+            <br />
+
+            <a href="#kontak" class="btn btn-primary">
+              <i class="fa-solid fa-calendar-check"></i>
+              Konsultasi & Request Penawaran
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+      <div class="container">
+        <h2>Mulai Digitalisasi SDM Perusahaan Anda Hari Ini</h2>
+        <p>
+          Jadwalkan konsultasi dan lihat bagaimana HROne dapat membantu perusahaan
+          mengelola SDM dengan lebih efektif, cepat, dan profesional.
+        </p>
+
+        <a class="btn btn-primary" href="#kontak">
+          <i class="fa-solid fa-paper-plane"></i>
+          Kirim Form Konsultasi
+        </a>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="kontak" class="contact">
+      <div class="container contact-grid">
+        <div class="contact-info">
+          <h3>Hubungi GPRO Technology</h3>
+
+          <p>
+            Diskusikan kebutuhan perusahaan Anda dan kami bantu rekomendasikan
+            solusi HROne yang paling sesuai.
+          </p>
+
+          <div class="contact-list">
+            <div>
+              <i class="fa-solid fa-globe"></i>
+              Website: hrone.gpro.my.id
+            </div>
+
+            <div>
+              <i class="fa-solid fa-envelope"></i>
+              Email: support@gpro.my.id
+            </div>
+
+            <div>
+              <i class="fa-solid fa-location-dot"></i>
+              Balikpapan, Indonesia
+            </div>
+
+            <div>
+              <i class="fa-solid fa-headset"></i>
+              Konsultasi: via form website
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-form">
+          <h3>Form Konsultasi HROne</h3>
+
+          <p class="form-helper">
+            Data yang dikirim akan masuk ke dashboard Netlify Forms dan dapat
+            diteruskan ke email support@gpro.my.id.
+          </p>
+
+          <form
+            name="konsultasi-hrone"
+            method="POST"
+            data-netlify="true"
+            netlify-honeypot="bot-field"
+            action="/success.html"
+          >
+            <input type="hidden" name="form-name" value="konsultasi-hrone" />
+
+            <p style="display: none;">
+              <label>
+                Jangan isi ini:
+                <input name="bot-field" />
+              </label>
+            </p>
+
+            <input
+              type="text"
+              name="nama"
+              placeholder="Nama Lengkap"
+              required
+            />
+
+            <input
+              type="email"
+              name="email"
+              placeholder="Email Aktif"
+              required
+            />
+
+            <input
+              type="tel"
+              name="telepon"
+              placeholder="Nomor Telepon / WhatsApp"
+              required
+            />
+
+            <input
+              type="text"
+              name="perusahaan"
+              placeholder="Nama Perusahaan"
+              required
+            />
+
+            <input
+              type="text"
+              name="jabatan"
+              placeholder="Jabatan"
+            />
+
+            <input
+              type="number"
+              name="jumlah_karyawan"
+              placeholder="Jumlah Karyawan"
+            />
+
+            <select name="kebutuhan" required>
+              <option value="">Pilih Kebutuhan</option>
+              <option value="Absensi Online">Absensi Online</option>
+              <option value="Absensi + Cuti">Absensi + Cuti</option>
+              <option value="HR System Lengkap">HR System Lengkap</option>
+              <option value="Custom System">Custom System</option>
+            </select>
+
+            <textarea
+              name="pesan"
+              placeholder="Ceritakan kebutuhan perusahaan Anda"
+            ></textarea>
+
+            <button type="submit" class="btn btn-primary">
+              <i class="fa-solid fa-paper-plane"></i>
+              Kirim Konsultasi
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p><strong>HROne</strong> — Manage People. Simplify Work.</p>
+      <p>© 2026 GPRO Technology. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Optional WhatsApp Floating Button -->
+  <!-- Ganti 628xxxxxxxxxx dengan nomor kamu. Kalau tidak mau pakai WhatsApp, hapus bagian <a> ini. -->
+  <a
+    class="whatsapp-float"
+    href="https://wa.me/628xxxxxxxxxx?text=Halo%20GPRO%20Technology%2C%20saya%20tertarik%20dengan%20HROne."
+    target="_blank"
+    aria-label="WhatsApp"
+  >
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+</body>
+</html>
